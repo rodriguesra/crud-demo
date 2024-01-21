@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+    <title>Tasks</title>
+</head>
+<body>
+<h1>Tasks</h1>
+<ul>
+    {% for task in tasks %}
+        <li>
+            <h2>{{ task.title }}</h2>
+            <p>{{ task.description }}</p>
+            <p>Completed: {{ task.completed }}</p>
+        </li>
+    {% endfor %}
+</ul>
+</body>
+</html>

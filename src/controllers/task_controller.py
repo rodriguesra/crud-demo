@@ -1,17 +1,19 @@
-from flask import request, jsonify
+from flask import request, jsonify, render_template
 from flask.views import MethodView
+
+from src.models.task import Task
 from src.services.task_service import TaskService
 
 
 class TaskController(MethodView):
     @staticmethod
     def get(id=None):
-        if id:
-            task = TaskService.get_task_by_id(id)
-            return jsonify(task.to_dict())
+        if id is None:
+            tasks = Task.query.all()
+            return render_template('tasks.html', tasks=tasks)
         else:
-            tasks = TaskService.get_all_tasks()
-            return jsonify([task.to_dict() for task in tasks])
+            task = Task.query.get(id)
+            return render_template('task.html', task=task)
 
     @staticmethod
     def post():

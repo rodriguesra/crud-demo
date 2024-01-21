@@ -16,11 +16,9 @@ with app.app_context():
 
 task_view = TaskController.as_view('task_api')
 
-app.add_url_rule('/tasks', defaults={'id': None},
-                 view_func=task_view, methods=['GET', ])
+app.add_url_rule('/tasks', defaults={'id': None}, view_func=task_view, methods=['GET', ])
 app.add_url_rule('/tasks', view_func=task_view, methods=['POST', ])
-app.add_url_rule('/tasks/<int:id>', view_func=task_view,
-                 methods=['GET', 'PUT', 'DELETE'])
+app.add_url_rule('/tasks/<int:id>', view_func=task_view, methods=['GET', 'PUT', 'DELETE'])
 
 if __name__ == '__main__':
     app.run()
