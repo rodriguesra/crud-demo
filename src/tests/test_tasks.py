@@ -1,19 +1,18 @@
 import pytest
-from flask import Flask
-from src.models.task import db
+from app import app, db  # Import the Flask app and db from app.py
 from src.services.task_service import TaskService
 
 
 @pytest.fixture
 def client():
-    app = Flask(__name__)
     app.config['TESTING'] = True
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'
-    db.init_app(app)
     with app.test_client() as client:
         with app.app_context():
             db.create_all()
-        yield client
+            yield client
+            db.session.remove()
+            db.drop_all()
 
 
 def test_get_all_tasks(client):
